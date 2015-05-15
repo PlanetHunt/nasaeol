@@ -1,11 +1,10 @@
 #!/usr/bin/python3
-import re
 from Config import Config
 from Download import Download
 from datetime import datetime
-from Database import Database
 from lxml import html
 from lxml import etree
+import re
 
 
 class ParseImageList:
@@ -48,7 +47,8 @@ class ParseImageList:
 
     def load(self):
         self.start_over()
-        if(len(list(self.db.get_all_images(self.mission_id))) > 0 and not self.new_start):
+        if(len(list(self.db.get_all_images(self.mission_id))) > 0 and
+           not self.new_start):
             self.images = self.db.find_rest_images(self.mission_id)
 
         else:
@@ -117,6 +117,3 @@ class ParseImageList:
                                 self.mission_id, a[0].text)
                 self.db.update_mission_image_id(
                     self.mission_id, str(0))
-#dab = Database()
-#img = ParseImageList("STS001", db=dab)
-#img.load()

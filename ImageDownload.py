@@ -15,7 +15,7 @@ class ImageDownload:
         self.orig_url = ""
         self.url_base = "http://eol.jsc.nasa.gov/SearchPhotos"
         self.dl_url_base = "http://eol.jsc.nasa.gov"
-	self.file_name = None
+        self.file_name = None
 
     def find_urls(self):
         """
@@ -59,7 +59,7 @@ class ImageDownload:
                 time.sleep(120)
                 down = Download(orig_url, self.config.get_image_folder())
                 if(down.perform()):
-		    self.file_name = down.get_output_name()
+                    self.file_name = down.get_output_name()
                     return True
         return False
 

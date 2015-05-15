@@ -2,7 +2,6 @@ import re
 from Download import Download
 from bs4 import BeautifulSoup
 from datetime import datetime
-from Database import Database
 
 
 class ParseMission:
@@ -62,6 +61,3 @@ class ParseMission:
                                            self.parse_date(
                                                mission_as_list[4].text),
                                            mission_as_list[5].text)
-#dab = Database()
-#mp = ParseMission("http://eol.jsc.nasa.gov/FAQ/default.htm", db=dab)
-#mp.load()

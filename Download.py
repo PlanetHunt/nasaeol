@@ -5,6 +5,7 @@ import os
 import urllib
 from io import BytesIO
 
+
 class Download:
 
     """
@@ -162,7 +163,8 @@ class Download:
         else:
             return self.perform_file()
 
-#down = Download(
-#    "http://eoimages.gsfc.nasa.gov/images/imagerecords/36000/36377/Australia_AMO_2009006_lrg.jpg", "images")
-#a = down.perform()
-#print(a)
+# down = Download(
+#    ("http://eoimages.gsfc.nasa.gov/images/imagerecords/36000/36377/
+#      "Australia_AMO_2009006_lrg.jpg"), "images")
+# a = down.perform()
+# print(a)

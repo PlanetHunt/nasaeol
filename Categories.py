@@ -16,7 +16,9 @@ class Categories:
         self.mission_name = None
         self.mission_number = None
         self.mission_minor = None
-        self.base_api = "https://commons.wikimedia.org/w/api.php?action=query&continue=&format=json&list=allcategories&acprefix="
+        self.base_api = ("https://commons.wikimedia.org/w/api.php?"
+                         "action=query&continue=&format=json&list"
+                         "=allcategories&acprefix=")
 
     def mission_grind(self):
         m = re.match(r"([a-zA-Z]+)", self.mission)

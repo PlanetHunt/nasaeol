@@ -7,13 +7,18 @@ from sqlalchemy.sql import and_
 from datetime import datetime
 from Config import Config
 
+
 class Database:
 
     def __init__(self):
-	config = Config()
-	config.load()
-	db_setting = config.get_database_setting()
-        self.engine = create_engine('mysql+pymysql://'+db_setting["user"]+':'+db_setting["pass"]+'@'+db_setting["host"]+'/'+db_setting["db"]+'?charset=utf8', echo=True)
+        config = Config()
+        config.load()
+        db_setting = config.get_database_setting()
+        self.engine = create_engine('mysql+pymysql://' + db_setting["user"] +
+                                    ':' + db_setting["pass"] + '@' +
+                                    db_setting["host"] + '/' +
+                                    db_setting["db"] +
+                                    '?charset=utf8', echo=True)
         metadata = MetaData()
         self.images = Table('images', metadata,
                             Column('id', Integer, primary_key=True),
@@ -29,7 +34,7 @@ class Database:
                             Column('rec_type', String(255)),
                             Column('downloaded', BOOLEAN),
                             Column('uploaded', BOOLEAN),
-			    Column('image_name', String(255))
+                            Column('image_name', String(255))
                             )
         self.missions = Table('missions', metadata,
                               Column('id', Integer, primary_key=True),
@@ -57,7 +62,7 @@ class Database:
                      mission_id="",
                      downloaded=False,
                      uploaded=False,
-		     image_name=None):
+                     image_name=None):
         ins = self.images.insert().values(
             url=url,
             mission_id=mission_id,
@@ -71,7 +76,7 @@ class Database:
             rec_type=rec_type,
             downloaded=downloaded,
             uploaded=uploaded,
-	    image_name=image_name)
+            image_name=image_name)
         conn = self.engine.connect()
         return conn.execute(ins)
 
@@ -127,7 +132,8 @@ class Database:
 
     def update_image_downloaded(self, image_id, file_name):
         stmt = self.images.update().where(
-            self.images.c.image_id == image_id).values(downloaded=True, image_name=file_name)
+            self.images.c.image_id == image_id).values(downloaded=True,
+                                                       image_name=file_name)
         conn = self.engine.connect()
         return conn.execute(stmt)
 
@@ -139,7 +145,8 @@ class Database:
 
     def update_mission_image_id(self, mission_id, image_id):
         stmt = self.missions.update().where(
-            self.missions.c.mission_id == mission_id).values(database_img=image_id)
+            self.missions.c.mission_id == mission_id).\
+            values(database_img=image_id)
         conn = self.engine.connect()
         return conn.execute(stmt)
 
