@@ -41,9 +41,9 @@ class Upload:
 
     def perform(self):
         """Do the upload, dont forget the params should be set"""
+       	self.convert()
 	file_path = self.config.get_image_folder() + "/" + self.file_name
 	if(not self.file_exists(file_path)):
-        	self.convert()
 		print "Start upload"
         	run_process = ["python3",
               			"pywikibot/pwb.py",
