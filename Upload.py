@@ -1,6 +1,10 @@
 from subprocess import Popen, PIPE, call
 from Config import Config
+from Download import Download
 import re
+import json
+import hashlib
+
 
 class Upload:
 
@@ -14,20 +18,46 @@ class Upload:
         self.description = description
         self.config = config
 
+
+    def hash_file(self, filename):
+	h = hashlib.sha1()
+   	with open(filename,'rb') as file:
+		chunk = 0
+        	while chunk != b'':
+           		chunk = file.read(1024)
+           		h.update(chunk)
+	return h.hexdigest()
+
+    def file_exists(self, file_path):
+	hash_local = self.hash_file(file_path)
+	download = Download("https://commons.wikimedia.org/w/api.php?action=query&list=allimages&format=json&aisha1="+hash_local, as_var=True)
+	if(download.perform()):
+		content = download.get_result().getvalue()
+		json_data = json.loads(content)
+		if(len(json_data["query"]["allimages"])>0):
+			return True
+		else:
+			return False
+
     def perform(self):
         """Do the upload, dont forget the params should be set"""
-        self.convert()
-	print "Start upload"
-        run_process = ["python3",
-                        "pywikibot/pwb.py",
-                        "upload",
-                        self.config.get_image_folder() + "/" + self.file_name,
-                        "-keep",
-                        "-noverify",
-                        self.description.get_desc()]
-	print run_process
-        subProc = call(run_process)
-	print "End Upload"
+	file_path = self.config.get_image_folder() + "/" + self.file_name
+	if(not self.file_exists(file_path)):
+        	self.convert()
+		print "Start upload"
+        	run_process = ["python3",
+              			"pywikibot/pwb.py",
+                        	"upload",
+				file_path,
+                        	"-keep",
+                        	"-noverify",
+                        	self.description.get_desc()]
+		print run_process
+       		subProc = call(run_process)
+		print "End Upload"
+	else:
+		print "File Existed in Commons"
+		pass
 
     def convert(self):
         """If the file is NEF convert it to tiff so it is Commons Compatible"""
@@ -39,3 +69,6 @@ class Upload:
 	    subprocess  = call(run_process)    
         else:
             pass
+
+#up = Upload("iss040e112792.jpeg")
+#up.perform()
