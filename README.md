@@ -13,7 +13,7 @@ After installing ```pip``` use this command to install sqlalchemy.
 ```sudo pip install sqlalchemy```   
 ### pywikibot (as submodule included)
 you have to update the submodule and one-time set-up of the pywikibot with your username.
-### BeutifulSoup and lxml
+### BeautifulSoup and lxml
 To parse the html pages on Nasa website, the application uses lxml and BS4  
 ```sudo apt-get install python-bs4 python-lxml```   
 ### uwfraw
@@ -53,7 +53,7 @@ So there is a lot to do. This project just works but need a lot of work.
 - Writing test-case
 - System-wide Configuration
 - Removing Duplicate codes (It exists)
-- Replacing BeutifulSoup with lxml for the whole code.
+- Replacing BeautifulSoup with lxml for the whole code.
 - Better logging
 - regex for pywikibot Uploader
 
